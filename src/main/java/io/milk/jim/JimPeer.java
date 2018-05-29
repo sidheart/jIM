@@ -16,11 +16,14 @@
 
 package io.milk.jim;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.*;
 import java.io.*;
+
 
 /**
  * Represents a jIM peer listening for connections this is the server-like component of a peer
@@ -28,8 +31,28 @@ import java.io.*;
 public class JimPeer
 {
     private static final Logger LOG = LoggerFactory.getLogger(JimPeer.class);
+    private static final String BOOTSTRAP_SERVER = "127.0.0.1";
 
-    private ServerSocket serverSocket;
+    protected ServerSocket serverSocket;
+    protected String username;
+    protected NodeInfo[] finger_table;
+    protected NodeInfo predecessor;
+    protected NodeInfo me;
+
+    public JimPeer(String username) {
+        String host = "";
+        serverSocket = null;
+        this.username = username;
+        byte[] id = DigestUtils.sha1(username);
+        // TODO (milk) this is a temporary solution, eventually get a real IP
+        try {
+            host = InetAddress.getLocalHost().toString();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        me = new NodeInfo(id, host);
+    }
 
     /**
      * Start listening for incoming connections on the specified port.
@@ -54,7 +77,8 @@ public class JimPeer
     public void stop()
     {
         try {
-            serverSocket.close();
+            if (serverSocket != null)
+                serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -97,5 +121,7 @@ public class JimPeer
             }
 
         }
+
+        // TODO respond to GET requests with some OpNotSupported type thing
     }
 }

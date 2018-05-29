@@ -37,8 +37,7 @@ public class JimSession {
      * @param ip The IP address of the target peer.
      * @param port the port number that the target peer is listening on.
      */
-    public void startConnection(String ip, int port)
-    {
+    public void startConnection(String ip, int port) {
         try {
             jimSocket = new Socket(ip, port);
             out = new PrintWriter(jimSocket.getOutputStream());

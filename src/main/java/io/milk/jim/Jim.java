@@ -18,6 +18,7 @@ package io.milk.jim;
 
 public class Jim {
     public static void main(String[] args) {
+        /*
         int port = 4761;
         JimPeer jimmy = new JimPeer();
         if (args.length == 2) {
@@ -28,5 +29,7 @@ public class Jim {
             }
         }
         jimmy.start(port);
+        */
+        System.out.println("Hello Jim!");
     }
 }
