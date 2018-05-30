@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sidheart/jIM.svg?branch=master)](https://travis-ci.org/sidheart/jIM)
+
 # jIM: Java Instant Messenger
 Basically a serverless, P2P java application intended to allow for encrypted communication between two or more hosts.
 
